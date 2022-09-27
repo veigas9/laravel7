@@ -1,0 +1,55 @@
+COMANDOS ARTISAN
+- iniciar tinker
+php artisan tinker
+
+-Instanciar objeto
+$exemplo = new \App\exemplo();
+
+-Setar valores no objeto
+$exemplo->nome = 'nome';
+
+ADICIONANDO REGISTROS COM Create e Fillable
+Na classe que será persistido o registro deve-se habilitar o $fillable, ex:
+protected $fillable = ['nome', 'site', 'uf', 'email'];
+
+executar no tinker:
+\App\Fornecedor::create(['nome'=>'fornecedor 2', 'site'=>'site.com.br', 'uf'=>'RS', 'email'=>'teste@gmail.com'])
+
+FILTRO WHERE
+$contato = SiteContato::where('coluna', 'operador', 'parâmetro')->get();
+
+whereIn
+$contato = SiteContato::whereIn('campo_a_ser_comparado_por_igual', 'conjunto_de_parametros')->get();
+
+whereNotIn
+$contato = SiteContato::whereIn('campo_a_ser_comparado_por_diferente', 'conjunto_de_parametros')->get();
+
+whereBetween
+$contato = SiteContato::whereBetween('coluna', 'valores_que_deve_estar_entre')->get();
+ex:
+$contato = SiteContato::whereBetween('id', [1, 3])->get();
+
+Filtrar Datas:
+$contatos = SiteContato::whereDate('created_at', 'data_desejada')->get();
+Filtra Dia:
+$contatos = SiteContato::whereDay('created_at', '31')->get();
+Filtra horário:
+$contatos = SiteContato::whereTime('created_at', '=', '22:31:17')->get();
+
+GRUPOS DE OPERADORES LÓGICOS
+$contatos = SiteContato::where(
+    function($query){
+        $query->where('nome', 'Jorge')->orWhere('nome', 'Ana');
+    })->where(function($query){
+        $query->whereIn('motivo_contato', [1, 2])->orWhereBetween('id', [4, 6]);
+    })->get();
+
+MÉTODO pluck //Médoto recupera os valores da chave passada
+SiteContato::all()->pluck('email');//recupera todos os emails da collection
+
+//METODO RESTORE()
+//Para reativar registro deletado pelo método softdelete, deve-ser usar método restore();
+$fornecedor[0]->restore();
+
+//CRIANDO FACTORY PARA POPULAR BASE DE TESTE
+php artisan mode:factory SiteContatoFactory --model=SiteContato
