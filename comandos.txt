@@ -53,3 +53,12 @@ $fornecedor[0]->restore();
 
 //CRIANDO FACTORY PARA POPULAR BASE DE TESTE
 php artisan mode:factory SiteContatoFactory --model=SiteContato
+
+
+//EXECUTAR SEEDER
+ex:
+php artisan db:seed --class=SiteContatoSeeder
+
+//INCLUINDO MENSAGEM GENÉRICA NO BLADE
+No exemplo pegamos o tipo de validação 'required' e adicionamos o :attribute que vai pegar o atributo de cada campo.
+'required' => 'O campo :attribute deve ser preenchido'
