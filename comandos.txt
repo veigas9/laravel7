@@ -62,3 +62,10 @@ php artisan db:seed --class=SiteContatoSeeder
 //INCLUINDO MENSAGEM GENÉRICA NO BLADE
 No exemplo pegamos o tipo de validação 'required' e adicionamos o :attribute que vai pegar o atributo de cada campo.
 'required' => 'O campo :attribute deve ser preenchido'
+
+//CRIANDO MIDDLEWARE
+php artisan make:middleware NomeDoMiddleware
+
+//METODO $REQUEST
+Atributo SERVE contém parametros como:
+->REMOTE_ADDR
